@@ -2,7 +2,6 @@ package fdlimit
 
 import (
 	"fmt"
-	"github.com/ethereum/go-ethereum/common/fdlimit"
 	"math/rand"
 	"os"
 	"runtime"
@@ -17,11 +16,11 @@ func MaxIt() error {
 
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	rand.New(rand.NewSource(int64(time.Now().Nanosecond())))
-	limit, err := fdlimit.Maximum()
+	limit, err := Maximum()
 	if err != nil {
 		return fmt.Errorf("failed to retrieve file descriptor allowance:%s", err)
 	}
-	_, err = fdlimit.Raise(uint64(limit))
+	_, err = Raise(uint64(limit))
 	if err != nil {
 		return fmt.Errorf("failed to raise file descriptor allowance:%s", err)
 	}
